@@ -1,0 +1,17 @@
+service: lambda-hello-world
+
+provider:
+  name: aws
+  region: us-west-2
+  runtime: provided.al2023
+
+package:
+  patterns:
+    - '!**'             # Exclude everything
+    - bootstrap         # Include only the binary (must be named 'bootstrap')
+
+functions:
+  lambda-hello-world:
+    handler: bootstrap
+    memorySize: 128
+    timeout: 30
