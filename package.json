@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "deploy": "make bootstrap && serverless deploy",
+    "build": "make bootstrap",
+    "deploy": "npm run build && serverless deploy",
     "remove": "serverless remove"
   },
   "author": "",

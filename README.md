@@ -16,12 +16,12 @@ app/
 Dockerfile             -- Amazon Linux 2023 build image (GHC via ghcup)
 Makefile               -- build orchestration
 serverless.yml         -- Serverless Framework service definition
-package.json           -- npm scripts for deploy / remove
+package.json           -- npm scripts for build / deploy / remove
 ```
 
 ### Prerequisites
 
-* Docker
+* Docker with `buildx` support
 * Node.js (see `.nvmrc` — LTS/Jod, i.e. v22)
 * npm
 * AWS credentials configured (`aws configure` or environment variables)
@@ -40,9 +40,9 @@ make bootstrap
 
 This will:
 
-1. Build a Docker image based on Amazon Linux 2023 with GHC 9.6.7 and Cabal 3.12.1.
-2. Compile the Haskell project inside the container.
-3. Copy the resulting `bootstrap` binary to the project root.
+1. Run a multi-stage Docker build based on Amazon Linux 2023 with GHC 9.6.7 and Cabal 3.12.1.
+2. Resolve Haskell dependencies and compile the project entirely inside Docker.
+3. Export the resulting `bootstrap` binary directly to the project root with `docker buildx build --output`.
 
 ### Deploy
 
@@ -50,7 +50,7 @@ This will:
 npm run deploy
 ```
 
-Runs `make bootstrap` and then `serverless deploy`, which packages the
+Runs `npm run build` and then `serverless deploy`, which packages the
 `bootstrap` binary and deploys it to AWS Lambda in `us-west-2`.
 
 ### Remove

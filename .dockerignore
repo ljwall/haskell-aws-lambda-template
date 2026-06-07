@@ -1,3 +1,9 @@
+/.cabal-cache
+/.git
+/.serverless
+/memories
+/app/dist-al2023
+/app/dist-newstyle
 node_modules
 bootstrap
 dist-*
